@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="hi-IN" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KavyaLok — कविताएँ, कहानियाँ और शायरी | Poems, Stories & Shayari</title>
+  <meta name="description" content="KavyaLok — A premium Hindi and English literary platform for poems, stories, shayari, and inspirational writings. Explore 200+ shayari, 20 poems, 20 stories.">
+  <meta name="keywords" content="hindi poems, english poems, shayari, hindi stories, kavita, kavyalok, inspirational quotes, love shayari, sad shayari">
+  <meta name="author" content="Rajendra Prasad Sharma">
+  <!-- Open Graph -->
+  <meta property="og:title"       content="KavyaLok — Poems, Stories & Shayari">
+  <meta property="og:description" content="A premium literary platform for Hindi and English poems, stories, shayari and inspirational writings.">
+  <meta property="og:type"        content="website">
+  <meta property="og:locale"      content="hi_IN">
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebSite","name":"KavyaLok",
+   "description":"Premium Hindi and English literary platform",
+   "inLanguage":["hi","en"]}
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="canonical" href="index.html">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📜</text></svg>">
+</head>
+<body class="bg-gradient-dark">
+
+<!-- Reading Progress -->
+<div class="reading-progress-bar" id="readingProgressBar"></div>
+
+<!-- ══════ NAVBAR ══════ -->
+<nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+  <div class="container navbar-inner">
+    <a class="navbar-brand" href="index.html" aria-label="KavyaLok Home">
+      <div class="brand-icon" aria-hidden="true">📜</div>
+      <div>
+        <span class="brand-name">KavyaLok</span>
+        <span class="brand-tagline">काव्य, कहानी और शायरी</span>
+      </div>
+    </a>
+
+    <ul class="nav-links" role="list">
+      <li><a href="index.html"      class="active">🏠 Home</a></li>
+      <li><a href="poems.html">📖 Poems</a></li>
+      <li><a href="stories.html">📚 Stories</a></li>
+      <li><a href="shayari.html">✨ Shayari</a></li>
+      <li><a href="categories.html">🏷️ Categories</a></li>
+      <li><a href="about.html">👤 About</a></li>
+      <li><a href="contact.html">📬 Contact</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <button class="btn-icon" id="themeToggle" aria-label="Toggle theme">🌙</button>
+      <button class="btn-icon" onclick="document.getElementById('heroSearch').focus()" aria-label="Search">🔍</button>
+      <a href="poems.html" class="btn btn-primary btn-sm" style="display:none" id="navCta">Explore</a>
+    </div>
+
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Mobile navigation">
+  <a href="index.html">🏠 Home</a>
+  <a href="poems.html">📖 Poems / कविताएँ</a>
+  <a href="stories.html">📚 Stories / कहानियाँ</a>
+  <a href="shayari.html">✨ Shayari / शायरी</a>
+  <a href="categories.html">🏷️ Categories</a>
+  <a href="about.html">👤 About Author</a>
+  <a href="contact.html">📬 Contact</a>
+</div>
+
+<!-- ══════ HERO ══════ -->
+<header class="hero" id="hero" aria-label="Hero section">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-particles" id="heroParticles" aria-hidden="true"></div>
+
+  <div class="container" style="position:relative;z-index:1;text-align:center">
+    <div class="hero-badge" aria-label="Hindi and English Literary Platform">
+      🪷 हिंदी & English Literary Platform
+    </div>
+
+    <h1 class="hero-title">
+      <span class="gradient-text">KavyaLok</span>
+    </h1>
+    <span class="hero-title-hindi">काव्य लोक — जहाँ शब्द बोलते हैं</span>
+    <div style="height:38px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:1.05rem;margin:8px 0 2px">
+      <span style="color:var(--text-muted)">✦ आज पढ़ें:</span>
+      <span id="heroTypewriter" style="color:var(--gold-light,#f0d060);font-family:var(--font-hindi);font-weight:600;letter-spacing:.5px;min-width:2ch"></span><span style="color:var(--gold-main);opacity:.9;animation:blink 1s step-end infinite">|</span>
+    </div>
+
+    <p class="hero-quote" id="heroQuote">
+      कविता वो दर्पण है जिसमें आत्मा अपना असली चेहरा देखती है
+    </p>
+
+    <!-- Search Bar -->
+    <div class="search-wrap" style="margin-bottom:32px" role="search">
+      <span class="search-icon" aria-hidden="true">🔍</span>
+      <input class="search-input"
+             id="heroSearch"
+             type="search"
+             placeholder="Search poems, stories, shayari… / कविता, कहानी खोजें…"
+             aria-label="Search content">
+    </div>
+
+    <div class="hero-actions">
+      <a href="poems.html"   class="btn btn-primary btn-lg">📖 Read Poems</a>
+      <a href="shayari.html" class="btn btn-outline btn-lg">✨ Explore Shayari</a>
+      <a href="stories.html" class="btn btn-ghost   btn-lg">📚 Stories</a>
+    </div>
+
+    <div style="margin-top:32px;display:inline-flex;align-items:center;gap:8px;background:var(--gold-glow);border:1px solid var(--gold-border);border-radius:100px;padding:7px 20px;font-size:.8rem;font-weight:700;color:var(--gold-main);letter-spacing:.8px;animation:fadeInUp 0.9s ease 0.5s both">
+      ✍️ Written by <strong>VIKH</strong> &bull; Khushi &amp; Vikash
+    </div>
+
+    <div class="hero-stats" aria-label="Website statistics">
+      <div class="hero-stat">
+        <span class="hero-stat-num" data-count="20" data-suffix="+">20+</span>
+        <span class="hero-stat-label">Poems / कविताएँ</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num" data-count="20" data-suffix="+">20+</span>
+        <span class="hero-stat-label">Stories / कहानियाँ</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num" data-count="200" data-suffix="+">200+</span>
+        <span class="hero-stat-label">Shayari / शायरी</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num" data-count="2" data-suffix=" Lang">2 Lang</span>
+        <span class="hero-stat-label">Hindi & English</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ══════ DAILY QUOTE ══════ -->
+<section class="section-sm" aria-labelledby="quoteHeading">
+  <div class="container">
+    <div class="quote-widget" id="quoteWidget">
+      <div class="quote-label" id="quoteHeading">✦ आज का विचार — Quote of the Day ✦</div>
+      <p class="quote-text hindi">कविता वो आईना है जिसमें आत्मा अपना चेहरा देखती है।</p>
+      <div class="quote-attribution">— राजेंद्र प्रसाद शर्मा</div>
+      <button class="btn btn-outline btn-sm mt-3" id="randomQuoteBtn" onclick="randomQuote()">
+        🎲 New Quote
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ FEATURED POEMS ══════ -->
+<section class="section" id="featuredPoems" aria-labelledby="featPoemsHeading">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">✦ Featured</span>
+      <h2 class="section-title gradient-text" id="featPoemsHeading">Featured Poems · विशेष कविताएँ</h2>
+      <div class="divider-gold"></div>
+      <p class="section-subtitle">Handpicked poems in Hindi and English — words that touch the soul.</p>
+    </div>
+
+    <div class="grid-3 animate-in" id="featuredPoemsGrid"></div>
+
+    <div class="text-center mt-4">
+      <a href="poems.html" class="btn btn-outline">View All Poems →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ FEATURED STORIES ══════ -->
+<section class="section" style="background:var(--bg-secondary);border-top:1px solid var(--border-subtle);border-bottom:1px solid var(--border-subtle)" aria-labelledby="featStoriesHeading">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">📚 Stories</span>
+      <h2 class="section-title" id="featStoriesHeading">Featured Stories · चुनिंदा कहानियाँ</h2>
+      <div class="divider-gold"></div>
+      <p class="section-subtitle">Inspiring tales that move hearts and change perspectives.</p>
+    </div>
+
+    <div class="grid-3 animate-in" id="featuredStoriesGrid"></div>
+
+    <div class="text-center mt-4">
+      <a href="stories.html" class="btn btn-outline">View All Stories →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ TRENDING SHAYARI ══════ -->
+<section class="section" aria-labelledby="trendingShayariHeading">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">🔥 Trending</span>
+      <h2 class="section-title gradient-text" id="trendingShayariHeading">Trending Shayari · ट्रेंडिंग शायरी</h2>
+      <div class="divider-gold"></div>
+      <p class="section-subtitle">Most loved shayari across categories — in Hindi and English.</p>
+    </div>
+
+    <div class="grid-auto-sm animate-in" id="trendingShayariGrid"></div>
+
+    <div class="text-center mt-4">
+      <a href="shayari.html" class="btn btn-outline">View All Shayari →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ CATEGORIES ══════ -->
+<section class="section" style="background:var(--bg-secondary);border-top:1px solid var(--border-subtle);border-bottom:1px solid var(--border-subtle)" aria-labelledby="catsHeading">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">🏷️ Browse</span>
+      <h2 class="section-title" id="catsHeading">Explore Categories · श्रेणियाँ</h2>
+      <div class="divider-gold"></div>
+    </div>
+
+    <div class="grid-4 animate-in" id="categoriesGrid"></div>
+
+    <div class="text-center mt-4">
+      <a href="categories.html" class="btn btn-outline">All Categories →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ AUTHOR SPOTLIGHT ══════ -->
+<section class="section" aria-labelledby="authorHeading">
+  <div class="container container-sm">
+    <div class="section-header">
+      <span class="section-eyebrow">✍️ Author</span>
+      <h2 class="section-title gradient-text" id="authorHeading">Author Spotlight · लेखक परिचय</h2>
+      <div class="divider-gold"></div>
+    </div>
+
+    <div class="author-card animate-in">
+      <div style="text-align:center">
+        <div class="author-avatar-wrap">
+          <div class="author-avatar-ring" aria-hidden="true"></div>
+          <div class="author-avatar" aria-label="Author avatar">✍️</div>
+        </div>
+      </div>
+      <div>
+        <h3 class="author-name gradient-text">Rajendra Prasad Sharma</h3>
+        <span class="author-name-hindi">राजेंद्र प्रसाद शर्मा</span>
+        <p class="author-bio">
+          A celebrated Hindi and English poet, storyteller, and shayari writer with over 20 years
+          of literary experience. His works have touched millions of hearts across India and beyond,
+          weaving together the rich tapestry of Indian emotions, values, and spirituality through
+          the medium of words.
+          <br><br>
+          एक प्रतिष्ठित हिंदी और अंग्रेज़ी कवि, कहानीकार और शायर जिनकी रचनाओं ने लाखों दिलों को
+          छुआ है। उनकी कविताएँ, कहानियाँ और शायरी भारतीय भावनाओं और संस्कृति को जीवंत करती हैं।
+        </p>
+        <div class="author-stats">
+          <div class="author-stat">
+            <span class="author-stat-num">20+</span>
+            <span class="author-stat-label">Years Writing</span>
+          </div>
+          <div class="author-stat">
+            <span class="author-stat-num">15</span>
+            <span class="author-stat-label">Books Published</span>
+          </div>
+          <div class="author-stat">
+            <span class="author-stat-num">12</span>
+            <span class="author-stat-label">Awards</span>
+          </div>
+          <div class="author-stat">
+            <span class="author-stat-num">500K+</span>
+            <span class="author-stat-label">Readers</span>
+          </div>
+        </div>
+        <a href="about.html" class="btn btn-primary">Read Full Profile →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ NEWSLETTER ══════ -->
+<section class="newsletter-section" aria-labelledby="newsletterHeading">
+  <div class="container" style="text-align:center">
+    <span class="section-eyebrow">📧 Newsletter</span>
+    <h2 class="section-title mt-2" id="newsletterHeading">Stay Inspired · प्रेरित रहें</h2>
+    <p class="section-subtitle">Subscribe to receive the finest poems, stories, and shayari directly in your inbox.</p>
+    <form class="newsletter-form" id="newsletterForm" role="form" aria-label="Newsletter subscription">
+      <input class="newsletter-input" type="email" placeholder="Enter your email address…" required aria-label="Email address">
+      <button class="btn btn-primary" type="submit">Subscribe 🌸</button>
+    </form>
+  </div>
+</section>
+
+<!-- ══════ FOOTER ══════ -->
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a class="navbar-brand" href="index.html" style="text-decoration:none;display:inline-flex;margin-bottom:16px">
+          <div class="brand-icon">📜</div>
+          <div style="margin-left:10px">
+            <span class="brand-name">KavyaLok</span>
+            <span class="brand-tagline">काव्य, कहानी और शायरी</span>
+          </div>
+        </a>
+        <p class="footer-brand-desc">
+          A premium digital literary platform celebrating the beauty of Hindi and English literature —
+          poems, stories, shayari, and inspirational writings.
+        </p>
+        <p style="font-size:.8rem;color:var(--gold-main);font-weight:600;margin-bottom:16px;letter-spacing:.5px">
+          ✍️ Written by VIKH &bull; Khushi &amp; Vikash
+        </p>
+        <div class="social-links" aria-label="Social media links">
+          <a href="#" class="social-link" aria-label="Facebook">📘</a>
+          <a href="#" class="social-link" aria-label="Instagram">📸</a>
+          <a href="#" class="social-link" aria-label="Twitter">🐦</a>
+          <a href="#" class="social-link" aria-label="YouTube">▶️</a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="footer-heading">Explore</h4>
+        <ul class="footer-links" role="list">
+          <li><a href="poems.html">📖 Poems / कविताएँ</a></li>
+          <li><a href="stories.html">📚 Stories / कहानियाँ</a></li>
+          <li><a href="shayari.html">✨ Shayari / शायरी</a></li>
+          <li><a href="categories.html">🏷️ Categories</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-heading">Pages</h4>
+        <ul class="footer-links" role="list">
+          <li><a href="index.html">🏠 Home</a></li>
+          <li><a href="about.html">👤 About Author</a></li>
+          <li><a href="contact.html">📬 Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-heading">Shayari Categories</h4>
+        <ul class="footer-links" role="list">
+          <li><a href="shayari.html?cat=Love+Shayari">💕 Love Shayari</a></li>
+          <li><a href="shayari.html?cat=Sad+Shayari">💔 Sad Shayari</a></li>
+          <li><a href="shayari.html?cat=Motivational+Shayari">⚡ Motivational</a></li>
+          <li><a href="shayari.html?cat=Attitude+Shayari">😎 Attitude</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2025 KavyaLok. All rights reserved.</span>
+      <span class="footer-bottom-hindi">शब्दों की दुनिया में आपका स्वागत है।</span>
+      <span style="color:var(--gold-main);font-weight:600">✍️ Written by <span style="letter-spacing:.5px">VIKH</span> &bull; Khushi &amp; Vikash</span>
+      <a href="admin.html" title="Admin Panel" style="opacity:.2;font-size:.7rem;color:var(--text-muted);text-decoration:none;transition:.2s" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='.2'">⚙️</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+<!-- ══════ Scripts ══════ -->
+<script src="js/poems.js"></script>
+<script src="js/stories.js"></script>
+<script src="js/shayari.js"></script>
+<script src="js/admin-data.js"></script>
+<script src="js/app.js"></script>
+<script>
+// ── Home Page Logic ──────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+
+  // Featured Poems (6 featured/trending)
+  const featPoems = POEMS.filter(p => p.featured || p.trending).slice(0, 6);
+  document.getElementById('featuredPoemsGrid').innerHTML =
+    featPoems.map(renderPoemCard).join('');
+
+  // Featured Stories (6)
+  const featStories = STORIES.filter(s => s.featured || s.trending).slice(0, 6);
+  document.getElementById('featuredStoriesGrid').innerHTML =
+    featStories.map(renderStoryCard).join('');
+
+  // Trending Shayari (8)
+  const trendShayari = SHAYARI.filter(s => s.trending).slice(0, 8);
+  document.getElementById('trendingShayariGrid').innerHTML =
+    trendShayari.map(renderShayariCard).join('');
+
+  // Categories grid — correct filtered links per content type
+  const cats = [
+    { icon:'💕', name:'Love Poems',           count:'2 Poems',    link:'poems.html?cat=Love+Poems' },
+    { icon:'🌿', name:'Nature Poems',          count:'2 Poems',    link:'poems.html?cat=Nature+Poems' },
+    { icon:'⚡', name:'Motivational Poems',    count:'2 Poems',    link:'poems.html?cat=Motivational+Poems' },
+    { icon:'👨‍👩‍👦', name:'Family Poems',       count:'2 Poems',    link:'poems.html?cat=Family+Poems' },
+    { icon:'🌟', name:'Inspirational Stories', count:'4 Stories',  link:'stories.html?cat=Inspirational+Stories' },
+    { icon:'⚖️', name:'Moral Stories',         count:'3 Stories',  link:'stories.html?cat=Moral+Stories' },
+    { icon:'💔', name:'Sad Shayari',           count:'15 Shayari', link:'shayari.html?cat=Sad+Shayari' },
+    { icon:'🔥', name:'Motivational Shayari',  count:'20 Shayari', link:'shayari.html?cat=Motivational+Shayari' },
+  ];
+  document.getElementById('categoriesGrid').innerHTML = cats.map(c => `
+    <a class="category-card" href="${c.link}" style="text-decoration:none">
+      <div class="cat-icon">${c.icon}</div>
+      <div class="cat-title">${c.name}</div>
+      <div class="cat-count">${c.count}</div>
+    </a>`).join('');
+
+  // Global search dropdown — searches across poems, stories AND shayari
+  const heroInput = document.getElementById('heroSearch');
+  const searchWrap = heroInput ? heroInput.closest('.search-wrap') : null;
+  if (heroInput && searchWrap) {
+    const dd = document.createElement('div');
+    dd.id = 'heroSearchDropdown';
+    dd.style.cssText = 'display:none;position:absolute;top:100%;left:0;right:0;background:var(--bg-card);border:1px solid var(--border-card);border-radius:0 0 16px 16px;backdrop-filter:blur(20px);max-height:420px;overflow-y:auto;z-index:200;box-shadow:0 20px 40px rgba(0,0,0,.45)';
+    searchWrap.style.position = 'relative';
+    searchWrap.appendChild(dd);
+
+    function buildDropdown(q) {
+      if (q.length < 2) { dd.style.display = 'none'; return; }
+      const ql = q.toLowerCase();
+      const row = (icon, href, title, sub) =>
+        `<a href="${href}" style="display:flex;align-items:center;gap:12px;padding:10px 16px;text-decoration:none;transition:.15s" onmouseover="this.style.background='var(--bg-tertiary)'" onmouseout="this.style.background=''">`+
+        `<span style="font-size:1.4rem">${icon}</span><div><div style="font-size:.88rem;color:var(--text-primary);font-weight:600">${title}</div><div style="font-size:.74rem;color:var(--text-muted)">${sub}</div></div></a>`;
+      const section = (label, borderTop) =>
+        `<div style="padding:8px 16px 3px;font-size:.7rem;color:var(--gold-main);font-weight:700;letter-spacing:1.2px;text-transform:uppercase${borderTop?';border-top:1px solid var(--border-subtle)':''}">${label}</div>`;
+
+      const ps = POEMS.filter(p => p.title.toLowerCase().includes(ql) || p.excerpt.toLowerCase().includes(ql)).slice(0,3);
+      const ss = STORIES.filter(s => s.title.toLowerCase().includes(ql) || s.summary.toLowerCase().includes(ql)).slice(0,3);
+      const sh = SHAYARI.filter(s => s.lines.toLowerCase().includes(ql) || s.cat.toLowerCase().includes(ql)).slice(0,3);
+      const qe = encodeURIComponent(q);
+
+      if (!ps.length && !ss.length && !sh.length) {
+        dd.innerHTML = `<div style="padding:22px;text-align:center;color:var(--text-muted);font-size:.85rem">No results for "<em>${q}</em>"</div>`;
+        dd.style.display = 'block'; return;
+      }
+      let html = '';
+      if (ps.length) { html += section('📖 Poems', false); html += ps.map(p => row('📖',`poems.html?q=${qe}`,p.title,`${p.language} · ${p.category}`)).join(''); }
+      if (ss.length) { html += section('📚 Stories', !!ps.length); html += ss.map(s => row('📚',`stories.html?q=${qe}`,s.title,`${s.language} · ${s.category}`)).join(''); }
+      if (sh.length) { html += section('✨ Shayari', !!(ps.length||ss.length)); html += sh.map(s => row('✨',`shayari.html?cat=${encodeURIComponent(s.cat)}`,s.lines.split('\n')[0].slice(0,50)+'…',s.cat)).join(''); }
+      html += `<div style="padding:10px 16px;border-top:1px solid var(--border-subtle);display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+        <a href="poems.html?q=${qe}" class="btn btn-outline" style="font-size:.75rem;padding:5px 12px">📖 All Poems</a>
+        <a href="stories.html?q=${qe}" class="btn btn-outline" style="font-size:.75rem;padding:5px 12px">📚 All Stories</a>
+        <a href="shayari.html" class="btn btn-outline" style="font-size:.75rem;padding:5px 12px">✨ All Shayari</a>
+      </div>`;
+      dd.innerHTML = html;
+      dd.style.display = 'block';
+    }
+
+    let heroTimer;
+    heroInput.addEventListener('input', () => {
+      clearTimeout(heroTimer);
+      heroTimer = setTimeout(() => buildDropdown(heroInput.value.trim()), 280);
+    });
+    heroInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && heroInput.value.trim().length > 1)
+        window.location.href = `poems.html?q=${encodeURIComponent(heroInput.value.trim())}`;
+      if (e.key === 'Escape') { dd.style.display = 'none'; heroInput.blur(); }
+    });
+    document.addEventListener('click', e => { if (!searchWrap.contains(e.target)) dd.style.display = 'none'; });
+  }
+
+  // Typewriter effect in hero
+  const twEl = document.getElementById('heroTypewriter');
+  if (twEl && window.initTypewriter) {
+    initTypewriter(twEl, ['कविताएँ','Shayari','कहानियाँ','Quotes','प्रेम-रस','Kavya','गज़लें','Stories'], 80, 1800);
+  }
+
+  // Re-run animations
+  initScrollAnimations();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="hi-IN" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shayari · शायरी — KavyaLok</title>
+  <meta name="description" content="200+ Hindi and English shayari on love, sad, friendship, attitude, motivation and more on KavyaLok.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📜</text></svg>">
+</head>
+<body class="bg-gradient-dark">
+
+<div class="reading-progress-bar" id="readingProgressBar"></div>
+
+<nav class="navbar" id="navbar">
+  <div class="container navbar-inner">
+    <a class="navbar-brand" href="index.html">
+      <div class="brand-icon">📜</div>
+      <div><span class="brand-name">KavyaLok</span><span class="brand-tagline">काव्य, कहानी और शायरी</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">🏠 Home</a></li>
+      <li><a href="poems.html">📖 Poems</a></li>
+      <li><a href="stories.html">📚 Stories</a></li>
+      <li><a href="shayari.html" class="active">✨ Shayari</a></li>
+      <li><a href="categories.html">🏷️ Categories</a></li>
+      <li><a href="about.html">👤 About</a></li>
+      <li><a href="contact.html">📬 Contact</a></li>
+    </ul>
+    <div class="nav-actions"><button class="btn-icon" id="themeToggle">🌙</button></div>
+    <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">🏠 Home</a><a href="poems.html">📖 Poems</a><a href="stories.html">📚 Stories</a>
+  <a href="shayari.html">✨ Shayari</a><a href="categories.html">🏷️ Categories</a>
+  <a href="about.html">👤 About</a><a href="contact.html">📬 Contact</a>
+</div>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <span class="section-eyebrow">✨ Shayari</span>
+  <h1 class="page-header-title gradient-text">Shayari · शायरी</h1>
+  <p class="page-header-sub">200+ shayari — 100 Hindi, 100 English — Love, Sad, Attitude, Motivation & more</p>
+  <div class="divider-gold" style="margin-top:20px"></div>
+</div>
+
+<!-- SEARCH + FILTERS -->
+<section class="section-sm">
+  <div class="container">
+    <div class="search-wrap" style="margin-bottom:24px">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" id="shayariSearch" type="search" placeholder="Search shayari…">
+    </div>
+    <div class="filter-bar" id="shLangFilter">
+      <span style="color:var(--text-muted);font-size:.85rem;margin-right:4px">Language:</span>
+      <button class="filter-tab active" data-filter="all">All</button>
+      <button class="filter-tab" data-filter="hindi">🇮🇳 Hindi</button>
+      <button class="filter-tab" data-filter="english">🇬🇧 English</button>
+    </div>
+    <div class="filter-bar" id="shCatFilter">
+      <span style="color:var(--text-muted);font-size:.85rem;margin-right:4px">Category:</span>
+      <button class="filter-tab active" data-filter="all">All</button>
+      <button class="filter-tab" data-filter="Love Shayari">💕 Love</button>
+      <button class="filter-tab" data-filter="Sad Shayari">💔 Sad</button>
+      <button class="filter-tab" data-filter="Friendship Shayari">🤝 Friendship</button>
+      <button class="filter-tab" data-filter="Attitude Shayari">😎 Attitude</button>
+      <button class="filter-tab" data-filter="Motivational Shayari">⚡ Motivation</button>
+      <button class="filter-tab" data-filter="Life Shayari">🌙 Life</button>
+      <button class="filter-tab" data-filter="Emotional Shayari">💧 Emotional</button>
+      <button class="filter-tab" data-filter="Heartbreak Shayari">💔 Heartbreak</button>
+      <button class="filter-tab" data-filter="Romantic Shayari">🌹 Romantic</button>
+      <button class="filter-tab" data-filter="Success Shayari">🏆 Success</button>
+    </div>
+    <p style="font-size:.82rem;color:var(--text-muted)" id="shayariCount"></p>
+  </div>
+</section>
+
+<!-- SHAYARI GRID -->
+<section class="section-sm" style="padding-top:0">
+  <div class="container">
+    <div class="grid-auto-sm" id="shayariGrid"></div>
+    <div class="no-results hidden" id="shayariNoResults">
+      <div class="no-results-icon">📭</div>
+      <p class="no-results-text">No shayari found. Try a different search or filter.</p>
+    </div>
+    <div class="text-center mt-4" id="loadMoreWrap" style="display:none">
+      <button class="btn btn-outline" id="loadMoreBtn">Load More Shayari ↓</button>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom" style="justify-content:center;gap:24px;padding-top:24px;flex-wrap:wrap">
+      <span>© 2025 KavyaLok — <span class="footer-bottom-hindi">शब्दों की दुनिया</span></span>
+      <span style="color:var(--gold-main);font-weight:600">✍️ Written by VIKH &bull; Khushi &amp; Vikash</span>
+    </div>
+  </div>
+</footer>
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="js/poems.js"></script>
+<script src="js/stories.js"></script>
+<script src="js/shayari.js"></script>
+<script src="js/admin-data.js"></script>
+<script src="js/app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const grid     = document.getElementById('shayariGrid');
+  const noRes    = document.getElementById('shayariNoResults');
+  const countEl  = document.getElementById('shayariCount');
+  const loadWrap = document.getElementById('loadMoreWrap');
+  const loadBtn  = document.getElementById('loadMoreBtn');
+  const PAGE_SIZE = 24;
+  let filters  = { lang: 'all', cat: 'all' };
+  let query    = '';
+  let page     = 1;
+  let filtered = [];
+
+  // URL param for category (from footer links)
+  const urlCat = new URLSearchParams(location.search).get('cat');
+  if (urlCat) {
+    filters.cat = urlCat;
+    document.querySelectorAll('#shCatFilter .filter-tab').forEach(t => {
+      t.classList.toggle('active', t.dataset.filter === urlCat || (urlCat === 'all' && t.dataset.filter === 'all'));
+    });
+  }
+
+  function render(reset = true) {
+    if (reset) { page = 1; grid.innerHTML = ''; }
+    const start = (page - 1) * PAGE_SIZE;
+    const slice = filtered.slice(start, start + PAGE_SIZE);
+
+    if (reset && !filtered.length) { noRes.classList.remove('hidden'); loadWrap.style.display = 'none'; countEl.textContent = ''; return; }
+    noRes.classList.add('hidden');
+    grid.insertAdjacentHTML('beforeend', slice.map(renderShayariCard).join(''));
+    initScrollAnimations();
+    const displayed = Math.min(page * PAGE_SIZE, filtered.length);
+    countEl.textContent = `Showing ${displayed} of ${filtered.length} shayari`;
+    loadWrap.style.display = filtered.length > page * PAGE_SIZE ? 'block' : 'none';
+  }
+
+  function applyFilters() {
+    filtered = SHAYARI.filter(sh => {
+      if (filters.lang !== 'all' && sh.lang !== filters.lang) return false;
+      if (filters.cat  !== 'all' && sh.cat  !== filters.cat)  return false;
+      if (query && !(sh.lines + sh.cat + sh.author).toLowerCase().includes(query)) return false;
+      return true;
+    });
+    render(true);
+  }
+
+  loadBtn.addEventListener('click', () => { page++; render(false); });
+
+  applyFilters();
+  initSearch('shayariSearch', q => { query = q; applyFilters(); });
+  initFilterTabs('shLangFilter', val => { filters.lang = val; applyFilters(); });
+  initFilterTabs('shCatFilter',  val => { filters.cat  = val; applyFilters(); });
+});
+</script>
+</body>
+</html>
+

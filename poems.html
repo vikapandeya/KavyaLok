@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="hi-IN" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poems · कविताएँ — KavyaLok</title>
+  <meta name="description" content="Read 20 beautiful Hindi and English poems on love, nature, life, family, patriotism and more on KavyaLok.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📜</text></svg>">
+</head>
+<body class="bg-gradient-dark">
+
+<div class="reading-progress-bar" id="readingProgressBar"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="container navbar-inner">
+    <a class="navbar-brand" href="index.html">
+      <div class="brand-icon">📜</div>
+      <div><span class="brand-name">KavyaLok</span><span class="brand-tagline">काव्य, कहानी और शायरी</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">🏠 Home</a></li>
+      <li><a href="poems.html" class="active">📖 Poems</a></li>
+      <li><a href="stories.html">📚 Stories</a></li>
+      <li><a href="shayari.html">✨ Shayari</a></li>
+      <li><a href="categories.html">🏷️ Categories</a></li>
+      <li><a href="about.html">👤 About</a></li>
+      <li><a href="contact.html">📬 Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-icon" id="themeToggle">🌙</button>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">🏠 Home</a><a href="poems.html">📖 Poems</a><a href="stories.html">📚 Stories</a>
+  <a href="shayari.html">✨ Shayari</a><a href="categories.html">🏷️ Categories</a>
+  <a href="about.html">👤 About</a><a href="contact.html">📬 Contact</a>
+</div>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <span class="section-eyebrow">📖 Kavitayen</span>
+  <h1 class="page-header-title gradient-text">Poems · कविताएँ</h1>
+  <p class="page-header-sub">20 poems — 10 Hindi, 10 English — across 10 categories</p>
+  <div class="divider-gold" style="margin-top:20px"></div>
+</div>
+
+<!-- SEARCH + FILTERS -->
+<section class="section-sm">
+  <div class="container">
+    <div class="search-wrap" style="margin-bottom:24px">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" id="poemSearch" type="search" placeholder="Search poems by title, author, category…">
+    </div>
+
+    <div class="filter-bar" id="langFilter">
+      <span style="color:var(--text-muted);font-size:.85rem;margin-right:4px">Language:</span>
+      <button class="filter-tab active" data-filter="all"   data-filter-type="lang">All</button>
+      <button class="filter-tab"        data-filter="hindi" data-filter-type="lang">🇮🇳 Hindi</button>
+      <button class="filter-tab"        data-filter="english" data-filter-type="lang">🇬🇧 English</button>
+    </div>
+
+    <div class="filter-bar" id="catFilter">
+      <span style="color:var(--text-muted);font-size:.85rem;margin-right:4px">Category:</span>
+      <button class="filter-tab active" data-filter="all">All</button>
+      <button class="filter-tab" data-filter="Love Poems">💕 Love</button>
+      <button class="filter-tab" data-filter="Nature Poems">🌿 Nature</button>
+      <button class="filter-tab" data-filter="Family Poems">👨‍👩‍👦 Family</button>
+      <button class="filter-tab" data-filter="Motivational Poems">⚡ Motivational</button>
+      <button class="filter-tab" data-filter="Patriotic Poems">🇮🇳 Patriotic</button>
+      <button class="filter-tab" data-filter="Spiritual Poems">🕉️ Spiritual</button>
+      <button class="filter-tab" data-filter="Inspirational Poems">🌟 Inspirational</button>
+      <button class="filter-tab" data-filter="Emotional Poems">💧 Emotional</button>
+      <button class="filter-tab" data-filter="Life Poems">🌙 Life</button>
+      <button class="filter-tab" data-filter="Friendship Poems">🤝 Friendship</button>
+    </div>
+
+    <p style="font-size:.82rem;color:var(--text-muted)" id="poemCount"></p>
+  </div>
+</section>
+
+<!-- POEMS GRID -->
+<section class="section-sm" style="padding-top:0">
+  <div class="container">
+    <div class="grid-3" id="poemsGrid"></div>
+    <div class="no-results hidden" id="poemsNoResults">
+      <div class="no-results-icon">📭</div>
+      <p class="no-results-text">No poems found. Try a different search or filter.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom" style="justify-content:center;gap:24px;padding-top:24px;flex-wrap:wrap">
+      <span>© 2025 KavyaLok — <span class="footer-bottom-hindi">शब्दों की दुनिया</span></span>
+      <span style="color:var(--gold-main);font-weight:600">✍️ Written by VIKH &bull; Khushi &amp; Vikash</span>
+    </div>
+  </div>
+</footer>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="js/poems.js"></script>
+<script src="js/stories.js"></script>
+<script src="js/shayari.js"></script>
+<script src="js/admin-data.js"></script>
+<script src="js/app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const grid   = document.getElementById('poemsGrid');
+  const noRes  = document.getElementById('poemsNoResults');
+  const count  = document.getElementById('poemCount');
+
+  let filters = { lang: 'all', cat: 'all' };
+  let query   = '';
+
+  function render() {
+    const filtered = filterItems(POEMS, query, filters);
+    count.textContent = `Showing ${filtered.length} of ${POEMS.length} poems`;
+    if (!filtered.length) {
+      grid.innerHTML = '';
+      noRes.classList.remove('hidden');
+    } else {
+      noRes.classList.add('hidden');
+      grid.innerHTML = filtered.map(renderPoemCard).join('');
+      initScrollAnimations();
+    }
+  }
+
+  // URL params (search from home page)
+  const urlQ = new URLSearchParams(location.search).get('q');
+  if (urlQ) {
+    document.getElementById('poemSearch').value = urlQ;
+    query = urlQ.toLowerCase();
+  }
+
+  const urlCat = new URLSearchParams(location.search).get('cat');
+  if (urlCat) {
+    filters.cat = urlCat;
+    const btn = document.querySelector('#catFilter [data-filter="' + urlCat + '"]');
+    if (btn) {
+      document.querySelectorAll('#catFilter .filter-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+  }
+
+  render();
+
+  initSearch('poemSearch', q => { query = q; render(); });
+  initFilterTabs('langFilter', (val) => { filters.lang = val; render(); });
+  initFilterTabs('catFilter',  (val) => { filters.cat  = val; render(); });
+});
+</script>
+</body>
+</html>
+

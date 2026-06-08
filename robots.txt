@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Sitemap: sitemap.xml
+
+# KavyaLok — Premium Literary Platform
+# Hindi and English Poems, Stories, Shayari

@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel — KavyaLok</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+  <style>
+    /* ─── Admin shell ─── */
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; }
+
+    /* Login */
+    .login-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+    .login-box {
+      background: var(--bg-card); border: 1px solid var(--border-card);
+      border-radius: var(--radius-xl); padding: 48px 40px; width: 100%; max-width: 420px;
+      backdrop-filter: blur(20px); text-align: center;
+    }
+    .login-icon { font-size: 3rem; margin-bottom: 16px; }
+    .login-title { font-family: var(--font-english); font-size: 1.8rem; margin-bottom: 6px; }
+    .login-sub { color: var(--text-muted); font-size: .88rem; margin-bottom: 28px; }
+    .login-err { color: #f87171; font-size: .82rem; margin-top: 12px; display: none; font-weight: 500; }
+
+    /* Header */
+    .adm-header {
+      background: var(--bg-secondary); border-bottom: 1px solid var(--border-subtle);
+      padding: 12px 24px; display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 200;
+    }
+    .adm-brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-english); font-weight: 700; color: var(--gold-main); font-size: 1.1rem; }
+
+    /* Layout */
+    .adm-shell  { min-height: 100vh; display: flex; flex-direction: column; }
+    .adm-body   { display: flex; flex: 1; min-height: 0; }
+
+    /* Sidebar */
+    .adm-sidebar {
+      width: 230px; flex-shrink: 0; background: var(--bg-secondary);
+      border-right: 1px solid var(--border-subtle); padding: 20px 0;
+      position: sticky; top: 53px; height: calc(100vh - 53px); overflow-y: auto;
+    }
+    .sidebar-label { font-size: .68rem; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-muted); padding: 16px 20px 6px; }
+    .sidebar-btn {
+      display: flex; align-items: center; gap: 10px; padding: 11px 20px;
+      color: var(--text-secondary); font-size: .9rem; font-weight: 500;
+      cursor: pointer; border: none; background: none; width: 100%; text-align: left;
+      transition: var(--transition-fast); border-left: 3px solid transparent;
+    }
+    .sidebar-btn:hover { color: var(--text-primary); background: var(--bg-tertiary); }
+    .sidebar-btn.active { color: var(--gold-main); border-left-color: var(--gold-main); background: var(--gold-glow); }
+
+    /* Main */
+    .adm-main { flex: 1; padding: 32px; overflow-y: auto; }
+    .adm-panel { display: none; }
+    .adm-panel.active { display: block; }
+    .panel-title { font-family: var(--font-english); font-size: 1.5rem; color: var(--text-primary); margin: 0 0 4px; }
+    .panel-sub { color: var(--text-muted); font-size: .88rem; margin: 0 0 28px; }
+
+    /* Form */
+    .adm-form { max-width: 820px; }
+    .fg { margin-bottom: 20px; }
+    .fl { display: block; font-size: .78rem; font-weight: 700; color: var(--gold-main); margin-bottom: 7px; letter-spacing: .4px; text-transform: uppercase; }
+    .fi, .fta, .fsel {
+      width: 100%; padding: 11px 14px;
+      background: var(--bg-tertiary); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md); color: var(--text-primary);
+      font-size: .92rem; font-family: var(--font-body); outline: none;
+      transition: var(--transition);
+    }
+    .fi:focus, .fta:focus, .fsel:focus { border-color: var(--gold-border); box-shadow: 0 0 0 3px var(--gold-glow); }
+    .fi::placeholder, .fta::placeholder { color: var(--text-muted); }
+    .fta { min-height: 160px; resize: vertical; line-height: 1.8; }
+    .fta.tall { min-height: 340px; }
+    .fsel option { background: var(--bg-secondary); }
+    .fg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .fchk { display: flex; align-items: center; gap: 8px; }
+    .fchk input { width: 16px; height: 16px; accent-color: var(--gold-main); cursor: pointer; }
+    .fchk label { font-size: .88rem; color: var(--text-secondary); cursor: pointer; }
+    .fhint { font-size: .74rem; color: var(--text-muted); margin-top: 5px; }
+    .form-actions { display: flex; gap: 12px; margin-top: 12px; flex-wrap: wrap; }
+
+    /* Stats */
+    .stats-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 28px; }
+    .stat-chip {
+      background: var(--bg-card); border: 1px solid var(--border-card);
+      border-radius: var(--radius-lg); padding: 16px 20px;
+      display: flex; gap: 14px; align-items: center; min-width: 160px;
+    }
+    .stat-chip-icon { font-size: 1.8rem; }
+    .stat-chip-num { font-size: 1.5rem; font-weight: 800; color: var(--gold-main); font-family: var(--font-english); line-height: 1; }
+    .stat-chip-lbl { font-size: .74rem; color: var(--text-muted); margin-top: 2px; }
+
+    /* Manage table */
+    .manage-wrap { overflow-x: auto; }
+    .mgr-table { width: 100%; border-collapse: collapse; min-width: 640px; }
+    .mgr-table th {
+      text-align: left; padding: 10px 14px; font-size: .72rem; font-weight: 700;
+      color: var(--gold-main); text-transform: uppercase; letter-spacing: .8px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .mgr-table td { padding: 12px 14px; font-size: .87rem; border-bottom: 1px solid var(--border-subtle); color: var(--text-secondary); vertical-align: middle; }
+    .mgr-table tr:hover td { background: var(--bg-tertiary); }
+    .mgr-title { color: var(--text-primary); font-weight: 500; max-width: 260px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .bdg { display: inline-block; padding: 2px 9px; border-radius: 100px; font-size: .68rem; font-weight: 700; }
+    .bdg-hi  { background: rgba(255,200,50,.12); color: #ffc832; }
+    .bdg-en  { background: rgba(100,200,255,.12); color: #64c8ff; }
+    .bdg-sh  { background: rgba(212,175,55,.1);   color: var(--gold-main); }
+    .del-btn { background: none; border: 1px solid rgba(248,113,113,.3); color: #f87171; border-radius: var(--radius-sm); padding: 5px 10px; cursor: pointer; font-size: .78rem; transition: .15s; }
+    .del-btn:hover { background: rgba(248,113,113,.1); }
+    .empty-state { text-align: center; padding: 56px 24px; color: var(--text-muted); }
+    .empty-state .es-icon { font-size: 3rem; margin-bottom: 12px; }
+
+    /* Quick-action card */
+    .quick-actions { display: flex; flex-direction: column; gap: 10px; max-width: 380px; }
+
+    @media (max-width: 900px) {
+      .adm-sidebar { display: none; }
+      .adm-main { padding: 20px 16px; }
+    }
+    @media (max-width: 640px) {
+      .fg-row { grid-template-columns: 1fr; }
+      .login-box { padding: 32px 20px; }
+    }
+  </style>
+</head>
+<body class="bg-gradient-dark">
+
+<!-- ════════════════════════════════════════
+     LOGIN PAGE
+════════════════════════════════════════ -->
+<div id="loginPage" class="login-page">
+  <div class="login-box">
+    <div class="login-icon">⚙️</div>
+    <h2 class="login-title gradient-text">KavyaLok Admin</h2>
+    <p class="login-sub">Sign in to publish poems, stories &amp; shayari</p>
+    <form id="loginForm">
+      <div class="fg" style="text-align:left">
+        <label class="fl" for="adminId">Admin ID</label>
+        <input class="fi" type="text" id="adminId" placeholder="Enter your admin ID" autocomplete="username">
+      </div>
+      <div class="fg" style="text-align:left">
+        <label class="fl" for="adminPass">Password</label>
+        <input class="fi" type="password" id="adminPass" placeholder="Enter your password" autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn btn-primary w-full" style="justify-content:center;margin-top:4px">
+        Sign In &rarr;
+      </button>
+      <p class="login-err" id="loginErr">Incorrect ID or password. Please try again.</p>
+    </form>
+    <p style="margin-top:20px;font-size:.75rem;color:var(--text-muted)">
+      <a href="index.html" style="color:var(--gold-main);text-decoration:none">&larr; Back to KavyaLok</a>
+    </p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     ADMIN SHELL
+════════════════════════════════════════ -->
+<div id="adminShell" class="adm-shell" style="display:none">
+
+  <!-- Header -->
+  <header class="adm-header">
+    <div class="adm-brand">⚙️ KavyaLok Admin</div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <a href="index.html" target="_blank" class="btn btn-ghost" style="font-size:.8rem;padding:6px 14px">← View Site</a>
+      <button id="logoutBtn" class="btn btn-outline" style="font-size:.8rem;padding:6px 14px">Logout</button>
+    </div>
+  </header>
+
+  <div class="adm-body">
+
+    <!-- Sidebar -->
+    <aside class="adm-sidebar">
+      <div class="sidebar-label">Overview</div>
+      <button class="sidebar-btn active" data-panel="dashboard">📊 Dashboard</button>
+
+      <div class="sidebar-label" style="margin-top:8px">Publish</div>
+      <button class="sidebar-btn" data-panel="addPoem">📖 Add Poem</button>
+      <button class="sidebar-btn" data-panel="addStory">📚 Add Story</button>
+      <button class="sidebar-btn" data-panel="addShayari">✨ Add Shayari</button>
+
+      <div class="sidebar-label" style="margin-top:8px">Manage</div>
+      <button class="sidebar-btn" data-panel="manage">🗂️ All Content</button>
+    </aside>
+
+    <!-- Main area -->
+    <main class="adm-main">
+
+      <!-- ── Dashboard ── -->
+      <div class="adm-panel active" id="panel-dashboard">
+        <h2 class="panel-title">Dashboard</h2>
+        <p class="panel-sub">Your KavyaLok content at a glance</p>
+        <div class="stats-row" id="statsRow"></div>
+        <div class="card" style="padding:28px;max-width:400px">
+          <h4 style="color:var(--gold-main);margin:0 0 16px;font-family:var(--font-english)">Quick Actions</h4>
+          <div class="quick-actions">
+            <button class="btn btn-primary" onclick="switchPanel('addPoem')">📖 Write a New Poem</button>
+            <button class="btn btn-outline" onclick="switchPanel('addStory')">📚 Write a New Story</button>
+            <button class="btn btn-outline" onclick="switchPanel('addShayari')">✨ Add New Shayari</button>
+            <button class="btn btn-ghost"   onclick="switchPanel('manage')">🗂️ Manage All Content</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Add Poem ── -->
+      <div class="adm-panel" id="panel-addPoem">
+        <h2 class="panel-title">📖 Add New Poem</h2>
+        <p class="panel-sub">Fill in the details — your poem will appear live on the Poems page instantly</p>
+        <form class="adm-form" id="poemForm">
+          <div class="fg-row">
+            <div class="fg">
+              <label class="fl" for="p_title">Poem Title *</label>
+              <input class="fi" type="text" id="p_title" placeholder="e.g. प्यार की राहें" required>
+            </div>
+            <div class="fg">
+              <label class="fl" for="p_author">Author Name</label>
+              <input class="fi" type="text" id="p_author" value="राजेंद्र प्रसाद शर्मा">
+            </div>
+          </div>
+          <div class="fg-row">
+            <div class="fg">
+              <label class="fl" for="p_lang">Language *</label>
+              <select class="fsel" id="p_lang">
+                <option value="hindi">🇮🇳 Hindi</option>
+                <option value="english">🇬🇧 English</option>
+              </select>
+            </div>
+            <div class="fg">
+              <label class="fl" for="p_cat">Category *</label>
+              <select class="fsel" id="p_cat">
+                <option>Love Poems</option>
+                <option>Nature Poems</option>
+                <option>Motivational Poems</option>
+                <option>Life Poems</option>
+                <option>Friendship Poems</option>
+                <option>Spiritual Poems</option>
+                <option>Family Poems</option>
+                <option>Patriotic Poems</option>
+                <option>Inspirational Poems</option>
+                <option>Emotional Poems</option>
+              </select>
+            </div>
+          </div>
+          <div class="fg-row">
+            <div class="fg">
+              <label class="fl" for="p_rt">Reading Time</label>
+              <input class="fi" type="text" id="p_rt" value="3 min" placeholder="e.g. 3 min">
+            </div>
+            <div class="fg" style="display:flex;align-items:flex-end;gap:24px;padding-bottom:2px">
+              <div class="fchk"><input type="checkbox" id="p_featured"><label for="p_featured">⭐ Featured</label></div>
+              <div class="fchk"><input type="checkbox" id="p_trending"><label for="p_trending">🔥 Trending</label></div>
+            </div>
+          </div>
+          <div class="fg">
+            <label class="fl" for="p_excerpt">Short Excerpt *</label>
+            <textarea class="fta" id="p_excerpt" placeholder="1–3 lines shown on the poem card preview…" style="min-height:90px" required></textarea>
+            <p class="fhint">This is the card teaser. Keep it short and evocative.</p>
+          </div>
+          <div class="fg">
+            <label class="fl" for="p_content">Full Poem *</label>
+            <textarea class="fta tall" id="p_content" placeholder="Write the complete poem here…
+
+Use blank lines to separate stanzas.
+Every line break is preserved exactly as written." required></textarea>
+            <p class="fhint">Stanza breaks (blank lines) and line breaks are preserved in the reading modal.</p>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">📖 Publish Poem</button>
+            <button type="button" class="btn btn-ghost" onclick="document.getElementById('poemForm').reset()">Clear Form</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- ── Add Story ── -->
+      <div class="adm-panel" id="panel-addStory">
+        <h2 class="panel-title">📚 Add New Story</h2>
+        <p class="panel-sub">Write a story — it appears live on the Stories page instantly</p>
+        <form class="adm-form" id="storyForm">
+          <div class="fg-row">
+            <div class="fg">
+              <label class="fl" for="s_title">Story Title *</label>
+              <input class="fi" type="text" id="s_title" placeholder="e.g. एक नई शुरुआत" required>
+            </div>
+            <div class="fg">
+              <label class="fl" for="s_author">Author Name</label>
+              <input class="fi" type="text" id="s_author" value="राजेंद्र प्रसाद शर्मा">
+            </div>
+          </div>
+          <div class="fg-row">
+            <div class="fg">
+              <label class="fl" for="s_lang">Language *</label>
+              <select class="fsel" id="s_lang">
+                <option value="hindi">🇮🇳 Hindi</option>
+                <option value="english">🇬🇧 English</option>
+              </select>
+            </div>
+            <div class="fg">
+              <label class="fl" for="s_cat">Category *</label>
+              <select class="fsel" id="s_cat">
+                <option>Inspirational Stories</option>
+                <option>Moral Stories</option>
+                <option>Social Stories</option>
+                <option>Success Stories</option>
+                <option>Mystery Stories</option>
+                <option>Romantic Stories</option>
+                <option>Village Stories</option>
+                <option>Adventure Stories</option>
+                <option>Historical Stories</option>
+                <option>Horror Stories</option>
+              </select>
+            </div>
+          </div>
+          <div class="fg-row">
+            <div class="fg">
+              <label class="fl" for="s_rt">Reading Time</label>
+              <input class="fi" type="text" id="s_rt" value="8 min" placeholder="e.g. 8 min">
+            </div>
+            <div class="fg">
+              <label class="fl" for="s_moral">Moral / Life Lesson</label>
+              <input class="fi" type="text" id="s_moral" placeholder="e.g. Honesty is the best policy">
+            </div>
+          </div>
+          <div class="fg" style="display:flex;gap:24px">
+            <div class="fchk"><input type="checkbox" id="s_featured"><label for="s_featured">⭐ Featured</label></div>
+            <div class="fchk"><input type="checkbox" id="s_trending"><label for="s_trending">🔥 Trending</label></div>
+          </div>
+          <div class="fg" style="margin-top:12px">
+            <label class="fl" for="s_summary">Story Summary *</label>
+            <textarea class="fta" id="s_summary" placeholder="A 2–4 line summary shown on the story card…" style="min-height:100px" required></textarea>
+          </div>
+          <div class="fg">
+            <label class="fl" for="s_content">Full Story *</label>
+            <textarea class="fta tall" id="s_content" placeholder="Write the complete story here…
+
+Paragraph breaks (blank lines) are preserved in the reading modal." required></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">📚 Publish Story</button>
+            <button type="button" class="btn btn-ghost" onclick="document.getElementById('storyForm').reset()">Clear Form</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- ── Add Shayari ── -->
+      <div class="adm-panel" id="panel-addShayari">
+        <h2 class="panel-title">✨ Add New Shayari</h2>
+        <p class="panel-sub">Add a shayari — it appears live in the Shayari collection instantly</p>
+        <form class="adm-form" id="shayariForm">
+          <div class="fg">
+            <label class="fl" for="sh_lines">Shayari Lines *</label>
+            <textarea class="fta" id="sh_lines" placeholder="Write the shayari here, one line per line…
+
+दिल की बात कहना हो जब
+तो शायरी ही काम आती है" required></textarea>
+            <p class="fhint">Line breaks are preserved exactly as shown on the card.</p>
+          </div>
+          <div class="fg-row">
+            <div class="fg">
+              <label class="fl" for="sh_lang">Language *</label>
+              <select class="fsel" id="sh_lang">
+                <option value="hindi">🇮🇳 Hindi</option>
+                <option value="english">🇬🇧 English</option>
+              </select>
+            </div>
+            <div class="fg">
+              <label class="fl" for="sh_cat">Category *</label>
+              <select class="fsel" id="sh_cat">
+                <option>Love Shayari</option>
+                <option>Sad Shayari</option>
+                <option>Friendship Shayari</option>
+                <option>Attitude Shayari</option>
+                <option>Motivational Shayari</option>
+                <option>Life Shayari</option>
+                <option>Emotional Shayari</option>
+                <option>Heartbreak Shayari</option>
+                <option>Romantic Shayari</option>
+                <option>Success Shayari</option>
+              </select>
+            </div>
+          </div>
+          <div class="fg-row">
+            <div class="fg">
+              <label class="fl" for="sh_author">Poet / Author</label>
+              <input class="fi" type="text" id="sh_author" value="राजेंद्र प्रसाद शर्मा">
+            </div>
+            <div class="fg" style="display:flex;align-items:flex-end;padding-bottom:4px">
+              <div class="fchk"><input type="checkbox" id="sh_trending"><label for="sh_trending">🔥 Trending / Featured</label></div>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">✨ Publish Shayari</button>
+            <button type="button" class="btn btn-ghost" onclick="document.getElementById('shayariForm').reset()">Clear Form</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- ── Manage ── -->
+      <div class="adm-panel" id="panel-manage">
+        <h2 class="panel-title">🗂️ Manage Content</h2>
+        <p class="panel-sub">View and delete admin-published content</p>
+        <div class="filter-bar" id="manageFilter" style="margin-bottom:24px">
+          <button class="filter-tab active" data-mf="all">All</button>
+          <button class="filter-tab" data-mf="poems">📖 Poems</button>
+          <button class="filter-tab" data-mf="stories">📚 Stories</button>
+          <button class="filter-tab" data-mf="shayari">✨ Shayari</button>
+        </div>
+        <div id="manageContent"></div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+<script src="js/app.js"></script>
+<script>
+// ─────────────────────────────────────────────
+//  CREDENTIALS  (change here to update login)
+//  Default:  ID = vikh  |  Password = Admin@KavyaLok
+// ─────────────────────────────────────────────
+var _A = 'vikh';
+var _B = 'QWRtaW5AS2F2eWFMb2s='; // btoa('Admin@KavyaLok')
+
+// ── Auth ────────────────────────────────────
+function isLoggedIn() { return sessionStorage.getItem('_kla') === _B; }
+
+function checkSession() {
+  if (isLoggedIn()) showShell();
+}
+
+function showShell() {
+  document.getElementById('loginPage').style.display = 'none';
+  document.getElementById('adminShell').style.display = 'flex';
+  refreshStats();
+}
+
+// ── Login form ──────────────────────────────
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var id   = document.getElementById('adminId').value.trim();
+  var pass = document.getElementById('adminPass').value;
+  var err  = document.getElementById('loginErr');
+  try {
+    if (id === _A && btoa(pass) === _B) {
+      sessionStorage.setItem('_kla', _B);
+      err.style.display = 'none';
+      showShell();
+    } else {
+      err.style.display = 'block';
+      document.getElementById('adminPass').value = '';
+    }
+  } catch(ex) { err.style.display = 'block'; }
+});
+
+document.getElementById('logoutBtn').addEventListener('click', function() {
+  sessionStorage.removeItem('_kla');
+  document.getElementById('adminShell').style.display = 'none';
+  document.getElementById('loginPage').style.display  = 'flex';
+  document.getElementById('adminId').value   = '';
+  document.getElementById('adminPass').value = '';
+});
+
+// ── Panel navigation ─────────────────────────
+function switchPanel(name) {
+  document.querySelectorAll('.adm-panel').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.sidebar-btn').forEach(function(b) { b.classList.remove('active'); });
+  var panel = document.getElementById('panel-' + name);
+  if (panel) panel.classList.add('active');
+  var btn = document.querySelector('.sidebar-btn[data-panel="' + name + '"]');
+  if (btn) btn.classList.add('active');
+  if (name === 'manage') renderManage('all');
+}
+
+document.querySelectorAll('.sidebar-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() { switchPanel(btn.dataset.panel); });
+});
+
+// ── LocalStorage helpers ─────────────────────
+function lsLoad(key)       { try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch(e) { return []; } }
+function lsSave(key, data) { localStorage.setItem(key, JSON.stringify(data)); }
+function uid(prefix)       { return prefix + '_' + Date.now() + '_' + Math.floor(Math.random() * 99999); }
+function fv(id)            { return document.getElementById(id).value.trim(); }
+
+// ── Stats ────────────────────────────────────
+function refreshStats() {
+  var p = lsLoad('kl_admin_poems');
+  var s = lsLoad('kl_admin_stories');
+  var sh = lsLoad('kl_admin_shayari');
+  var chips = [
+    { icon:'📖', num: p.length,  lbl:'Poems' },
+    { icon:'📚', num: s.length,  lbl:'Stories' },
+    { icon:'✨', num: sh.length, lbl:'Shayari' },
+    { icon:'📝', num: p.length + s.length + sh.length, lbl:'Total' },
+  ];
+  document.getElementById('statsRow').innerHTML = chips.map(function(c) {
+    return '<div class="stat-chip">'
+      + '<div class="stat-chip-icon">' + c.icon + '</div>'
+      + '<div><div class="stat-chip-num">' + c.num + '</div>'
+      + '<div class="stat-chip-lbl">' + c.lbl + ' published</div></div></div>';
+  }).join('');
+}
+
+// ── Poem form ────────────────────────────────
+document.getElementById('poemForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var poem = {
+    id:          uid('pa'),
+    title:       fv('p_title'),
+    author:      fv('p_author') || 'राजेंद्र प्रसाद शर्मा',
+    language:    fv('p_lang'),
+    category:    fv('p_cat'),
+    readingTime: fv('p_rt') || '3 min',
+    excerpt:     fv('p_excerpt'),
+    content:     fv('p_content'),
+    featured:    document.getElementById('p_featured').checked,
+    trending:    document.getElementById('p_trending').checked,
+    likes: 0, views: 0,
+  };
+  var poems = lsLoad('kl_admin_poems');
+  poems.unshift(poem);
+  lsSave('kl_admin_poems', poems);
+  if (window.showToast) showToast('Poem "' + poem.title + '" published! ✅', 'success');
+  document.getElementById('poemForm').reset();
+  refreshStats();
+});
+
+// ── Story form ───────────────────────────────
+document.getElementById('storyForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var story = {
+    id:          uid('sa'),
+    title:       fv('s_title'),
+    author:      fv('s_author') || 'राजेंद्र प्रसाद शर्मा',
+    language:    fv('s_lang'),
+    category:    fv('s_cat'),
+    readingTime: fv('s_rt') || '8 min',
+    moral:       fv('s_moral'),
+    summary:     fv('s_summary'),
+    content:     fv('s_content'),
+    featured:    document.getElementById('s_featured').checked,
+    trending:    document.getElementById('s_trending').checked,
+    likes: 0, views: 0,
+  };
+  var stories = lsLoad('kl_admin_stories');
+  stories.unshift(story);
+  lsSave('kl_admin_stories', stories);
+  if (window.showToast) showToast('Story "' + story.title + '" published! ✅', 'success');
+  document.getElementById('storyForm').reset();
+  refreshStats();
+});
+
+// ── Shayari form ─────────────────────────────
+document.getElementById('shayariForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var sh = {
+    id:       uid('sha'),
+    lines:    fv('sh_lines'),
+    lang:     fv('sh_lang'),
+    cat:      fv('sh_cat'),
+    author:   fv('sh_author') || 'राजेंद्र प्रसाद शर्मा',
+    trending: document.getElementById('sh_trending').checked,
+    likes: 0,
+  };
+  var shayari = lsLoad('kl_admin_shayari');
+  shayari.unshift(sh);
+  lsSave('kl_admin_shayari', shayari);
+  if (window.showToast) showToast('Shayari published! ✅', 'success');
+  document.getElementById('shayariForm').reset();
+  refreshStats();
+});
+
+// ── Manage panel ─────────────────────────────
+var _mf = 'all';
+
+function renderManage(filter) {
+  _mf = filter;
+  document.querySelectorAll('#manageFilter .filter-tab').forEach(function(t) {
+    t.classList.toggle('active', t.dataset.mf === filter);
+  });
+
+  var poems   = (filter === 'stories' || filter === 'shayari') ? [] :
+                lsLoad('kl_admin_poems').map(function(p)  { p._t = 'poem';    return p; });
+  var stories = (filter === 'poems'   || filter === 'shayari') ? [] :
+                lsLoad('kl_admin_stories').map(function(s) { s._t = 'story';   return s; });
+  var shayari = (filter === 'poems'   || filter === 'stories') ? [] :
+                lsLoad('kl_admin_shayari').map(function(sh){ sh._t = 'shayari'; return sh; });
+  var all = poems.concat(stories, shayari);
+
+  var el = document.getElementById('manageContent');
+  if (!all.length) {
+    el.innerHTML = '<div class="empty-state"><div class="es-icon">📭</div><p>No admin-published content yet.<br>Start by adding a poem, story, or shayari!</p></div>';
+    return;
+  }
+
+  var rows = all.map(function(item) {
+    var typeIcon = item._t === 'poem' ? '📖' : item._t === 'story' ? '📚' : '✨';
+    var title = item.title || (item.lines || '').split('\n')[0].slice(0, 55) + '…';
+    var lang  = (item.language || item.lang || '—').toLowerCase();
+    var cat   = item.category || item.cat || '—';
+    var bdgCls = lang === 'hindi' ? 'bdg bdg-hi' : 'bdg bdg-en';
+    return '<tr>'
+      + '<td>' + typeIcon + '</td>'
+      + '<td class="mgr-title" title="' + (title||'').replace(/"/g,'&quot;') + '">' + (title||'') + '</td>'
+      + '<td><span class="' + bdgCls + '">' + lang + '</span></td>'
+      + '<td style="font-size:.8rem;color:var(--text-muted)">' + cat + '</td>'
+      + '<td><button class="del-btn" onclick="deleteItem(\'' + item._t + '\',\'' + item.id + '\')">🗑 Delete</button></td>'
+      + '</tr>';
+  }).join('');
+
+  el.innerHTML = '<div class="manage-wrap"><table class="mgr-table">'
+    + '<thead><tr><th>Type</th><th>Title / Preview</th><th>Lang</th><th>Category</th><th>Action</th></tr></thead>'
+    + '<tbody>' + rows + '</tbody></table></div>';
+}
+
+function deleteItem(type, id) {
+  if (!confirm('Delete this item permanently?')) return;
+  var keyMap = { poem:'kl_admin_poems', story:'kl_admin_stories', shayari:'kl_admin_shayari' };
+  var items = lsLoad(keyMap[type]).filter(function(i) { return i.id !== id; });
+  lsSave(keyMap[type], items);
+  if (window.showToast) showToast('Item deleted.', 'success');
+  renderManage(_mf);
+  refreshStats();
+}
+
+document.querySelectorAll('#manageFilter .filter-tab').forEach(function(t) {
+  t.addEventListener('click', function() { renderManage(t.dataset.mf); });
+});
+
+// ── Init ─────────────────────────────────────
+checkSession();
+</script>
+</body>
+</html>

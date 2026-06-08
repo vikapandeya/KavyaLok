@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="hi-IN" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stories · कहानियाँ — KavyaLok</title>
+  <meta name="description" content="Read 20 inspiring Hindi and English stories on KavyaLok — moral, social, success, romantic, mystery and more.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📜</text></svg>">
+</head>
+<body class="bg-gradient-dark">
+
+<div class="reading-progress-bar" id="readingProgressBar"></div>
+
+<nav class="navbar" id="navbar">
+  <div class="container navbar-inner">
+    <a class="navbar-brand" href="index.html">
+      <div class="brand-icon">📜</div>
+      <div><span class="brand-name">KavyaLok</span><span class="brand-tagline">काव्य, कहानी और शायरी</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">🏠 Home</a></li>
+      <li><a href="poems.html">📖 Poems</a></li>
+      <li><a href="stories.html" class="active">📚 Stories</a></li>
+      <li><a href="shayari.html">✨ Shayari</a></li>
+      <li><a href="categories.html">🏷️ Categories</a></li>
+      <li><a href="about.html">👤 About</a></li>
+      <li><a href="contact.html">📬 Contact</a></li>
+    </ul>
+    <div class="nav-actions"><button class="btn-icon" id="themeToggle">🌙</button></div>
+    <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">🏠 Home</a><a href="poems.html">📖 Poems</a><a href="stories.html">📚 Stories</a>
+  <a href="shayari.html">✨ Shayari</a><a href="categories.html">🏷️ Categories</a>
+  <a href="about.html">👤 About</a><a href="contact.html">📬 Contact</a>
+</div>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <span class="section-eyebrow">📚 Kahaniyaan</span>
+  <h1 class="page-header-title gradient-text">Stories · कहानियाँ</h1>
+  <p class="page-header-sub">20 stories — 10 Hindi, 10 English — with moral lessons and inspiring narratives</p>
+  <div class="divider-gold" style="margin-top:20px"></div>
+</div>
+
+<!-- SEARCH + FILTERS -->
+<section class="section-sm">
+  <div class="container">
+    <div class="search-wrap" style="margin-bottom:24px">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" id="storySearch" type="search" placeholder="Search stories by title, moral, category…">
+    </div>
+    <div class="filter-bar" id="storyLangFilter">
+      <span style="color:var(--text-muted);font-size:.85rem;margin-right:4px">Language:</span>
+      <button class="filter-tab active" data-filter="all">All</button>
+      <button class="filter-tab" data-filter="hindi">🇮🇳 Hindi</button>
+      <button class="filter-tab" data-filter="english">🇬🇧 English</button>
+    </div>
+    <div class="filter-bar" id="storyCatFilter">
+      <span style="color:var(--text-muted);font-size:.85rem;margin-right:4px">Category:</span>
+      <button class="filter-tab active" data-filter="all">All</button>
+      <button class="filter-tab" data-filter="Inspirational Stories">🌟 Inspirational</button>
+      <button class="filter-tab" data-filter="Moral Stories">⚖️ Moral</button>
+      <button class="filter-tab" data-filter="Social Stories">👥 Social</button>
+      <button class="filter-tab" data-filter="Success Stories">🏆 Success</button>
+      <button class="filter-tab" data-filter="Mystery Stories">🔍 Mystery</button>
+      <button class="filter-tab" data-filter="Romantic Stories">💕 Romantic</button>
+      <button class="filter-tab" data-filter="Village Stories">🌾 Village</button>
+      <button class="filter-tab" data-filter="Adventure Stories">🗺️ Adventure</button>
+      <button class="filter-tab" data-filter="Historical Stories">🏛️ Historical</button>
+    </div>
+    <p style="font-size:.82rem;color:var(--text-muted)" id="storyCount"></p>
+  </div>
+</section>
+
+<!-- STORIES GRID -->
+<section class="section-sm" style="padding-top:0">
+  <div class="container">
+    <div class="grid-3" id="storiesGrid"></div>
+    <div class="no-results hidden" id="storiesNoResults">
+      <div class="no-results-icon">📭</div>
+      <p class="no-results-text">No stories found. Try a different search or filter.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom" style="justify-content:center;gap:24px;padding-top:24px;flex-wrap:wrap">
+      <span>© 2025 KavyaLok — <span class="footer-bottom-hindi">शब्दों की दुनिया</span></span>
+      <span style="color:var(--gold-main);font-weight:600">✍️ Written by VIKH &bull; Khushi &amp; Vikash</span>
+    </div>
+  </div>
+</footer>
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="js/poems.js"></script>
+<script src="js/stories.js"></script>
+<script src="js/shayari.js"></script>
+<script src="js/admin-data.js"></script>
+<script src="js/app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const grid  = document.getElementById('storiesGrid');
+  const noRes = document.getElementById('storiesNoResults');
+  const count = document.getElementById('storyCount');
+  let filters = { lang: 'all', cat: 'all' };
+  let query   = '';
+
+  function render() {
+    const filtered = filterItems(STORIES, query, filters);
+    count.textContent = `Showing ${filtered.length} of ${STORIES.length} stories`;
+    if (!filtered.length) { grid.innerHTML = ''; noRes.classList.remove('hidden'); }
+    else { noRes.classList.add('hidden'); grid.innerHTML = filtered.map(renderStoryCard).join(''); initScrollAnimations(); }
+  }
+
+  const urlQ = new URLSearchParams(location.search).get('q');
+  if (urlQ) { document.getElementById('storySearch').value = urlQ; query = urlQ.toLowerCase(); }
+  const urlCat = new URLSearchParams(location.search).get('cat');
+  if (urlCat) { filters.cat = urlCat; const btn = document.querySelector('#storyCatFilter [data-filter="' + urlCat + '"]'); if (btn) { document.querySelectorAll('#storyCatFilter .filter-tab').forEach(b => b.classList.remove('active')); btn.classList.add('active'); } }
+  render();
+  initSearch('storySearch', q => { query = q; render(); });
+  initFilterTabs('storyLangFilter', val => { filters.lang = val; render(); });
+  initFilterTabs('storyCatFilter',  val => { filters.cat  = val; render(); });
+});
+</script>
+</body>
+</html>
+

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="hi-IN" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Categories · श्रेणियाँ — KavyaLok</title>
+  <meta name="description" content="Browse all poem, story and shayari categories on KavyaLok.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📜</text></svg>">
+</head>
+<body class="bg-gradient-dark">
+<div class="reading-progress-bar" id="readingProgressBar"></div>
+<nav class="navbar" id="navbar">
+  <div class="container navbar-inner">
+    <a class="navbar-brand" href="index.html"><div class="brand-icon">📜</div>
+      <div><span class="brand-name">KavyaLok</span><span class="brand-tagline">काव्य, कहानी और शायरी</span></div></a>
+    <ul class="nav-links">
+      <li><a href="index.html">🏠 Home</a></li><li><a href="poems.html">📖 Poems</a></li>
+      <li><a href="stories.html">📚 Stories</a></li><li><a href="shayari.html">✨ Shayari</a></li>
+      <li><a href="categories.html" class="active">🏷️ Categories</a></li>
+      <li><a href="about.html">👤 About</a></li><li><a href="contact.html">📬 Contact</a></li>
+    </ul>
+    <div class="nav-actions"><button class="btn-icon" id="themeToggle">🌙</button></div>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">🏠 Home</a><a href="poems.html">📖 Poems</a><a href="stories.html">📚 Stories</a>
+  <a href="shayari.html">✨ Shayari</a><a href="categories.html">🏷️ Categories</a>
+  <a href="about.html">👤 About</a><a href="contact.html">📬 Contact</a>
+</div>
+
+<div class="page-header">
+  <span class="section-eyebrow">🏷️ Browse</span>
+  <h1 class="page-header-title gradient-text">All Categories · सभी श्रेणियाँ</h1>
+  <p class="page-header-sub">Explore poems, stories and shayari by category</p>
+  <div class="divider-gold" style="margin-top:20px"></div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <!-- Poem Categories -->
+    <div class="section-header animate-in">
+      <span class="section-eyebrow">📖 Poems</span>
+      <h2 class="section-title">Poetry Categories · काव्य श्रेणियाँ</h2>
+      <div class="divider-gold"></div>
+    </div>
+    <div class="grid-4 animate-in" id="poemCatsGrid"></div>
+
+    <!-- Story Categories -->
+    <div class="section-header animate-in mt-6">
+      <span class="section-eyebrow">📚 Stories</span>
+      <h2 class="section-title">Story Categories · कहानी श्रेणियाँ</h2>
+      <div class="divider-gold"></div>
+    </div>
+    <div class="grid-4 animate-in" id="storyCatsGrid"></div>
+
+    <!-- Shayari Categories -->
+    <div class="section-header animate-in mt-6">
+      <span class="section-eyebrow">✨ Shayari</span>
+      <h2 class="section-title">Shayari Categories · शायरी श्रेणियाँ</h2>
+      <div class="divider-gold"></div>
+    </div>
+    <div class="grid-4 animate-in" id="shayariCatsGrid"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom" style="justify-content:center;gap:24px;padding-top:24px;flex-wrap:wrap">
+      <span>© 2025 KavyaLok — <span class="footer-bottom-hindi">शब्दों की दुनिया</span></span>
+      <span style="color:var(--gold-main);font-weight:600">✍️ Written by VIKH &bull; Khushi &amp; Vikash</span>
+    </div>
+  </div>
+</footer>
+<div class="toast-container" id="toastContainer"></div>
+<script src="js/poems.js"></script><script src="js/stories.js"></script>
+<script src="js/shayari.js"></script><script src="js/admin-data.js"></script><script src="js/app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const poemCats = [
+    {icon:'💕',name:'Love Poems'},{icon:'🌿',name:'Nature Poems'},{icon:'⚡',name:'Motivational Poems'},
+    {icon:'🌙',name:'Life Poems'},{icon:'🤝',name:'Friendship Poems'},{icon:'🕉️',name:'Spiritual Poems'},
+    {icon:'👨‍👩‍👦',name:'Family Poems'},{icon:'🇮🇳',name:'Patriotic Poems'},
+    {icon:'🌟',name:'Inspirational Poems'},{icon:'💧',name:'Emotional Poems'},
+  ];
+  const storyCats = [
+    {icon:'🌟',name:'Inspirational Stories'},{icon:'⚖️',name:'Moral Stories'},{icon:'🏛️',name:'Historical Stories'},
+    {icon:'👻',name:'Horror Stories'},{icon:'💕',name:'Romantic Stories'},{icon:'🔍',name:'Mystery Stories'},
+    {icon:'🗺️',name:'Adventure Stories'},{icon:'👥',name:'Social Stories'},
+    {icon:'🌾',name:'Village Stories'},{icon:'🏆',name:'Success Stories'},
+  ];
+  const shayariCats = [
+    {icon:'💕',name:'Love Shayari'},{icon:'😢',name:'Sad Shayari'},{icon:'🤝',name:'Friendship Shayari'},
+    {icon:'😎',name:'Attitude Shayari'},{icon:'⚡',name:'Motivational Shayari'},{icon:'🌙',name:'Life Shayari'},
+    {icon:'💧',name:'Emotional Shayari'},{icon:'💔',name:'Heartbreak Shayari'},
+    {icon:'🌹',name:'Romantic Shayari'},{icon:'🏆',name:'Success Shayari'},
+  ];
+
+  function countFor(data, name, key) {
+    return data.filter(d => (d.category || d.cat) === name).length;
+  }
+
+  function renderCats(cats, data, targetId, linkBase, filterKey) {
+    document.getElementById(targetId).innerHTML = cats.map(c => {
+      const cnt = countFor(data, c.name, filterKey);
+      return `<a class="category-card animate-in" href="${linkBase}?cat=${encodeURIComponent(c.name)}" style="text-decoration:none">
+        <div class="cat-icon">${c.icon}</div>
+        <div class="cat-title">${c.name}</div>
+        <div class="cat-count">${cnt} item${cnt !== 1 ? 's' : ''}</div>
+      </a>`;
+    }).join('');
+  }
+
+  renderCats(poemCats,    POEMS,   'poemCatsGrid',   'poems.html',   'category');
+  renderCats(storyCats,   STORIES, 'storyCatsGrid',  'stories.html', 'category');
+  renderCats(shayariCats, SHAYARI, 'shayariCatsGrid','shayari.html', 'cat');
+  initScrollAnimations();
+});
+</script>
+</body>
+</html>
+
